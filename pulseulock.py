@@ -1,11 +1,18 @@
+#/usr/bin/python3
+
+# ram persaud
+# 14 jan, 2023
+# This file should live in the Documents folder.
+
+
 import RPi.GPIO as GPIO
 import time
 import logging
 import subprocess
 
 
-logfile = "/home/accessc/Documents/accessc.log"
-#logging.basicConfig(filename="accessc.log", levevell=logging.INFO)
+# set up some logging
+logfile = "~/Documents/accessc.log"
 logging.basicConfig(filename="accessc.log", format='%(asctime)s %(levelname)-8s %(message)s', level=logging.INFO, datefmt='%Y-%m-%d %H:%M:%S')
  
 

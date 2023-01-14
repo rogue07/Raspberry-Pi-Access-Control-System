@@ -1,3 +1,11 @@
+#/usr/bin/python3
+
+# ram persaud
+# 14 jan, 2023
+# This file should live in the Documents folder.
+
+
+
 import RPi.GPIO as GPIO
 import time
 import logging
