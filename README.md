@@ -2,8 +2,11 @@
 Pi powered Access Control
 
 
-1. Run the installer:
+1. Make sure the OS has a user named:
+     accessc
+
+2. Run the installer:
      ./installer.sh
 
-2. Restore the codedb.sql:
+3. Restore the codedb.sql:
      
