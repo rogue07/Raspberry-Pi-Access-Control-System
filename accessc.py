@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-#Ram
+#Ramon Persaud
 #10 sep 2022
 #My attempt at an access control system.
 
