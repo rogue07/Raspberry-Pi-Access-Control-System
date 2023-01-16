@@ -45,11 +45,9 @@ def user_add():
     fname = input('Enter First name: ').lower()
     if fname == '':    
         print("Name can not be blank")
-        time.sleep(3)
         return
     else:
         print(fname)
-        time.sleep(1)
 
     lname = input('Enter last name: ').lower()
     if fname == '':    
@@ -58,7 +56,6 @@ def user_add():
         return
     else:
         print(lname)
-        time.sleep(1)
 
     logging.info(f'{fname, lname} was entered.')
     spi = busio.SPI(board.SCK, board.MOSI, board.MISO)
@@ -74,11 +71,8 @@ def user_add():
             continue
         else:
             print("Found card with UID:", [hex(i) for i in uid])
-            card = [hex(i) for i in uid]
-            time.sleep(2)
-
-#        today = date.today()
-#        today = datetime.now()
+            newCard = [hex(i) for i in uid]
+            
         now = datetime.now()
         today = now.strftime("%d/%m/%Y %H:%M")
 
@@ -92,25 +86,34 @@ def user_add():
         mycursor = mydb.cursor()
 
         print("Connected")
-        time.sleep(1)
-        print(card)
+        print(newCard)
         print(today)
-        time.sleep(1)
+
+        mycursor.execute(f'SELECT EXISTS(SELECT * FROM accessc WHERE card = "{newCard}") as OUTPUT')
+        myresult = mycursor.fetchone()
+        print(bool(myresult))
+        x = bool(myresult)
+        if myresult == True:
+            print("Card has already been issues")
+            time.sleep(2)
+            os.system("clear")
+            user_add()
+        else:
+            time.sleep(1)
 
         try:
-            sql = f'INSERT INTO accessc (first, last, card, creation, access) VALUES ("{fname}", "{lname}", "{card}", "{today}", "{today}")'
+            sql = f'INSERT INTO accessc (first, last, card, creation, access) VALUES ("{fname}", "{lname}", "{newCard}", "{today}", "{today}")'
             mycursor.execute(sql)
         except Exception as e:
             print(e)
             logging.info(f'{e}')
-            time.sleep(2)
             os.system('clear')
             break
         mydb.commit()
         print(mycursor.rowcount, "record inserted.")
         logging.info(f'{fname, lname} and card have been written to database.')
-        time.sleep(2)
         os.system('clear')
+        time.sleep(5)
         break
     
 # delete user and card functiin
@@ -122,7 +125,6 @@ def delete():
         database="codedb"
         )
     mycursor = mydb.cursor()
-#mycursor.execute("SELECT first, last FROM accessc")
 
     mycursor.execute("SELECT ROW_NUMBER() OVER (ORDER BY first) user_id, first, last FROM accessc")
     myresult = mycursor.fetchall()
@@ -139,16 +141,12 @@ def delete():
 #mycursor.execute(f'SELECT * FROM accessc WHERE first "{fname}")'
     mycursor.execute(f'SELECT * FROM accessc WHERE first = "{fname}" AND last = "{lname}"')
 
-#print(mycursor.execute(query, val))
     mycursor.fetchone()
-    time.sleep(2)
 
     mycursor.execute(f'DELETE FROM accessc WHERE first = "{fname}" AND last = "{lname}"')
     mydb.commit()
-#    mycursor.execute(goodbye)
+    
     print(fname, lname, "has been deleted.")
-    time.sleep(2)
-
 
 
 
