@@ -1,3 +1,10 @@
+#/usr/bin/python3
+
+# ram persaud
+# 14 jan, 2023
+# scanIn.py should be running as a systemd service
+
+
 import os
 import mysql.connector
 import logging
@@ -11,14 +18,19 @@ from adafruit_pn532.spi import PN532_SPI
 
 # log to accessc.log
 logfile = "/home/accessc/Documents/accessc.log"
-#logging.basicConfig(filename="accessc.log", lvell=logging.INFO)
 logging.basicConfig(filename="/home/accessc/Documents/accessc.log", format='%(asctime)s %(levelname)-8s %(message)s', level=logging.INFO, datefmt='%Y-%m-%d %H:%M:%S')
 
 
+# set some variables
 
 now = datetime.now()
 today = now.strftime("%d/%m/%Y %H:%M")
-   
+#today = now.strftime("%d/%m/%Y")
+spi = busio.SPI(board.SCK, board.MOSI, board.MISO)
+cs_pin = DigitalInOut(board.D5)
+pn532 = PN532_SPI(spi, cs_pin, debug=False)
+
+# mariadb login
 mydb = mysql.connector.connect(
     host="localhost",
     user="root",
@@ -28,11 +40,7 @@ mydb = mysql.connector.connect(
 mycursor = mydb.cursor()
 
 
-
-spi = busio.SPI(board.SCK, board.MOSI, board.MISO)
-cs_pin = DigitalInOut(board.D5)
-pn532 = PN532_SPI(spi, cs_pin, debug=False)
-
+# main
 pn532.SAM_configuration()
 print("Waiting for NFC card...")
 
@@ -44,25 +52,27 @@ while True:
     usercard = [hex(i) for i in uid]
    
     logging.info('Card was presented')
-    time.sleep(5)
 
-    mycursor.execute(f'SELECT EXISTS(SELECT * FROM accessc WHERE card = "{usercard}") as OUTPUT')
+    mycursor.execute(f'SELECT * FROM accessc WHERE card = "{usercard}"')
     myresult = mycursor.fetchone()
-    print(myresult)
-    mycursor.execute(f'SELECT last FROM accessc WHERE card = "{usercard}"')
-    lname = mycursor.fetchone()
-    mycursor.execute(f'SELECT first FROM accessc WHERE card = "{usercard}"')
-    fname = mycursor.fetchone()
-    print(fname, lname)
-
-    time.sleep(5)
     
-
-    if myresult != (1,):
-        print("Access failed")
-        logging.info('Failed access')
-        time.sleep(2)
-    else:
+    mycursor.execute(f'SELECT first, last FROM accessc WHERE card = "{usercard}"')
+    name = mycursor.fetchone()
+    
+    print(bool(myresult))
+    x = bool(myresult)
+    print(name)
+    time.sleep(1)
+    if x == True:
         print("Access successful")
-        logging.info(f'{fname} {lname} successful access')
-        time.sleep(2)
+        now = datetime.now()
+        today = now.strftime("%d/%m/%Y %H:%M")        
+        mycursor.execute(f'UPDATE accessc SET access = "{today}" WHERE CARD = "{usercard}"')
+
+    #    val = f'INSERT INTO accessc (access) VALUES ("{today}")'
+     #   mycursor.execute(val)
+        mydb.commit()
+        logging.info(f'{name} Access successful')
+    else:
+        print("Failed access")
+        logging.info('Failed access')
