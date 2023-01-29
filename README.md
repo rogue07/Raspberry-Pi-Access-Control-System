@@ -1,5 +1,7 @@
 # Raspberry-Pi-Access-Control-System
 Pi powered Access Control
+Built on: Raspbian GNU/Linux 11
+Using: 32 bit
 
 
 1. Make sure the OS has a user named:
