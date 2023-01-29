@@ -7,15 +7,10 @@ Pi powered Access Control
 
 2. Copy all the files into the Documents directory.
 
-3. Update the OS:
-     sudo apt update -y && sudo apt upgrade -y
-
-4. Run the installer:
+3. From the command prompt in the Documents directory run the installer:
      ./installer.sh
 
-5. Configure mariaDB:
-     
-Let's install and create the database and table. From the command prompt run the following:
+4. Let's install and create the database and table. From the command prompt run the following:
 $ sudo mysql_secure_installation
 
 Answer no:
