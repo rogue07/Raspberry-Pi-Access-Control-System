@@ -9,11 +9,14 @@ Using: 32 bit
 
 2. Copy all the files into the Documents directory.
 
-3. From the command prompt in the Documents directory run the installer:
-     ./installer.sh
+3. Set a root password. From the command prompt run:
+     $ sudo passwd root
 
-4. Let's install and create the database and table. From the command prompt run the following:
-$ sudo mysql_secure_installation
+4. From the command prompt in the Documents directory run the installer:
+     $ ./installer.sh
+
+5. Let's install and create the database and table. From the command prompt run the following:
+     $ sudo mysql_secure_installation
 
 Answer no:
 
