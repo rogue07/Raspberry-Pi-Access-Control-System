@@ -3,7 +3,9 @@ Pi powered Access Control
 Built on: Raspbian GNU/Linux 11
 Using: 32 bit
 
-The system uses pin 12 for relay control.
+The system uses GPIO 12 for relay control. The wiring diagram I went with is for SPI.
+https://learn.adafruit.com/adafruit-pn532-rfid-nfc/python-circuitpython
+
 
 
 1. Make sure the OS has a user named:
