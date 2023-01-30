@@ -1,25 +1,10 @@
-sudo apt-get update -y
+sudo apt update -y && sudo apt upgrade -y
 
-sudo apt-get upgrade -y
+sudo apt install python3-pip mariadb-server -y
 
-sudo apt-get install python3-pip -y
+pip3 install --upgrade setuptools adafruit-python-shell schedule python-crontab adafruit-circuitpython-pn532 sh keyboard mysql-connector-python mariadb
 
-sudo apt install mariadb-server -y
+clear
+echo "Creating service"
 
-pip3 install --upgrade setuptools
-
-pip3 install --upgrade adafruit-python-shell
-
-pip3 install schedule
-
-pip3 install python-crontab
-
-pip3 install adafruit-circuitpython-pn532
-
-pip3 install sh
-
-pip3 install keyboard
-
-pip3 install mysql-connector-python
-
-pip3 install mariadb
+sudo cp -v scanIn.service /etc/systemd/system/ && sudo systemctl start scanIn.service && sudo systemctl enable scanIn.service
