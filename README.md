@@ -3,6 +3,8 @@ Pi powered Access Control
 Built on: Raspbian GNU/Linux 11
 Using: 32 bit
 
+The system uses pin 12 for relay control.
+
 
 1. Make sure the OS has a user named:
      accessc
