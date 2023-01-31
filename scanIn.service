@@ -1,0 +1,13 @@
+[Unit]
+Description=Access control service
+After=network.target
+StartLimitIntervalSec=0
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=accessc
+ExecStart=/usr/bin/python3 /home/accessc/Documents/scanIn.py
+
+[Install]
+WantedBy=multi-user.target
