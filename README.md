@@ -15,7 +15,8 @@ All files are in the .zip file.
 1. Make sure the OS has a user named:
      accessc
 
-2. Copy all the files into the Documents directory.
+2. Unzip file:
+     $ unzip accessc.zip
 
 3. Set a root password. From the command prompt run:
      $ sudo passwd root
