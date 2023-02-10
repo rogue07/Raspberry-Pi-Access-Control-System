@@ -23,13 +23,13 @@ from datetime import datetime
 from crontab import CronTab
 import os.path
 
-
-# log to accessc.log
+# Log to accessc.log
 logging.basicConfig(filename="accessc.log", format='%(asctime)s %(levelname)-8s %(message)s', level=logging.INFO, datefmt='%Y-%m-%d %H:%M:%S')
 
 
-#Main menu
+# Displayed menu
 def menu():
+    print("")
     print("     Choose an option: ")
     print("     1. Add User & Cards")
     print("     2. Delete User & Card")
@@ -40,7 +40,7 @@ def menu():
     print("     7. Quit")
 
 
-#add user and associate a card with then and save to db.csv
+# Add user and associate a card with them
 def user_add():
     fname = input('Enter First name: ').lower()
     if fname == '':    
@@ -52,7 +52,7 @@ def user_add():
     lname = input('Enter last name: ').lower()
     if fname == '':    
         print("Name can not be blank")
-        time.sleep(3)
+        time.sleep(2)
         return
     else:
         print(lname)
@@ -66,6 +66,7 @@ def user_add():
     time.sleep(1)
 
     while True:
+        time.sleep(1)
         uid = pn532.read_passive_target(timeout=0.5)
         if uid is None:
             continue
@@ -78,8 +79,8 @@ def user_add():
 
         mydb = mysql.connector.connect(
         host="localhost",
-        user="root",
-        password="!B7!v0??",
+        user="accessc",
+        password="PASSWORD",
         database="codedb"
         )
 
@@ -91,6 +92,7 @@ def user_add():
 
         mycursor.execute(f'SELECT EXISTS(SELECT * FROM accessc WHERE card = "{newCard}") as OUTPUT')
         myresult = mycursor.fetchone()
+        print(myresult)
         print(bool(myresult))
         x = bool(myresult)
         if myresult == True:
@@ -107,21 +109,21 @@ def user_add():
         except Exception as e:
             print(e)
             logging.info(f'{e}')
+            time.sleep(3) 
             os.system('clear')
-            break
         mydb.commit()
         print(mycursor.rowcount, "record inserted.")
         logging.info(f'{fname, lname} and card have been written to database.')
         os.system('clear')
-        time.sleep(5)
+        time.sleep(2)
         break
     
 # delete user and card functiin
 def delete():
     mydb = mysql.connector.connect(
         host="localhost",
-        user="root",
-        password="!B7!v0??",
+        user="accessc",
+        password="PASSWORD",
         database="codedb"
         )
     mycursor = mydb.cursor()
@@ -140,7 +142,6 @@ def delete():
     lname = input("Enter last name> ")
 #mycursor.execute(f'SELECT * FROM accessc WHERE first "{fname}")'
     mycursor.execute(f'SELECT * FROM accessc WHERE first = "{fname}" AND last = "{lname}"')
-
     mycursor.fetchone()
 
     mycursor.execute(f'DELETE FROM accessc WHERE first = "{fname}" AND last = "{lname}"')
@@ -149,8 +150,7 @@ def delete():
     print(fname, lname, "has been deleted.")
 
 
-
-
+# Toggling relay to open and close the lock manually
 def lock():
     logging.info("Lock has been manually triggered.")
     GPIO.setmode(GPIO.BCM)
@@ -165,6 +165,7 @@ def lock():
     return
 
 
+# Create a schedule using cron
 def schedule():
     # whats the frequency kenneth
     note = input("Note ex.unlock schedule> ")
@@ -192,8 +193,7 @@ def schedule():
     time.sleep(3)
 
 
-
-#logginn function that shiwe a live view logs to accessc.log. It used ctl+c to exit the live view.
+# Run the linux command tail on accessc.log
 def log():
     try:
         while True:
@@ -203,7 +203,7 @@ def log():
         os.system('clear')
         return
 
-# Emergency lock down of all locks
+# Emergency lockdown for the lock
 def emergency():
     menu = input("Lock/Unlock L/U > ").lower()
     print(menu)
@@ -220,9 +220,18 @@ def emergency():
         return
 
 
+#def delete_old_logs():
+#    current_date = datetime.datetime.now()
+#    with open("accessc.log", "r") as f:
+#        lines = f.readlines()
 
+#    with open("accessc.log", "w") as f:
+#        for line in lines:
+#            line_date = datetime.datetime.strptime(line[:19], '%Y-%m-%d %H:%M:%S')
+#            if (current_date - line_date).days <= 7:
+#                f.write(line)
 
-# Main loop to choose an option like adf user and card, view live logs...
+# Main if elso loop for the menu
 while True:
     os.system('clear')
     menu()
@@ -260,11 +269,7 @@ while True:
     elif number == "7":
         print("Exiting")
         os.system('clear')
-        # check logfile size, it over 1,000,000 then purge
-        logfile = 'accessc.log'
-        os.system('clear')
-        sz = os.path.getsize(logfile)
-        print(f'The {logfile} size is', sz, 'bytes')
+        delete_old_logs()
         quit()
     elif number == "_":
         print("Choose a correct number.")

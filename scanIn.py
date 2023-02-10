@@ -33,8 +33,8 @@ pn532 = PN532_SPI(spi, cs_pin, debug=False)
 # mariadb login
 mydb = mysql.connector.connect(
     host="localhost",
-    user="root",
-    password="!B7!v0??",
+    user="accessc",
+    password="?Ac0ntr0l.",
     database="codedb"
     )
 mycursor = mydb.cursor()
@@ -45,6 +45,7 @@ pn532.SAM_configuration()
 print("Waiting for NFC card...")
 
 while True:
+    time.sleep(1.5)
     uid = pn532.read_passive_target(timeout=0.5)
     if uid is None:
         continue
@@ -69,8 +70,6 @@ while True:
         today = now.strftime("%d/%m/%Y %H:%M")        
         mycursor.execute(f'UPDATE accessc SET access = "{today}" WHERE CARD = "{usercard}"')
 
-    #    val = f'INSERT INTO accessc (access) VALUES ("{today}")'
-     #   mycursor.execute(val)
         mydb.commit()
         logging.info(f'{name} Access successful')
     else:
