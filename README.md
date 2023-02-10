@@ -57,3 +57,6 @@ Run the following commands:
 
 > EXIT;
 
+
+6. To run:
+     $ python3 accessc.py
