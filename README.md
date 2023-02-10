@@ -26,10 +26,15 @@ https://learn.adafruit.com/adafruit-pn532-rfid-nfc/python-circuitpython
 
 Answer yes to all:
 > Switch to unix_socket authentication [Y/n] y
+
 > Change the root password? [Y/n] y
+
 > Remove anonymous users? [Y/n] y
+
 > Disallow root login remotely? [Y/n] y
+
 > Remove test database and access to it? [Y/n] y
+
 > Reload privilege tables now? [Y/n] y
 
 From the command prompt run:
@@ -37,11 +42,18 @@ $ sudo mysql -u root -p
 
 Run the following commands:
 > CREATE DATABASE codedb;
+
 > show databases;
+
 > USE codedb;
+
 > CREATE TABLE accessc(user_id INT AUTO_INCREMENT PRIMARY KEY, first VARCHAR(20) NOT NULL, last VARCHAR(20) NOT NULL, card VARCHAR(32) NOT NULL, creation VARCHAR(25) NOT NULL, access VARCHAR(25) NOT NULL);
+
 > CREATE USER 'accessc'@'localhost' IDENTIFIED BY 'PASSWORD';
+
 > GRANT ALL ON codedb.* To 'accessc'@'localhost' WITH GRANT OPTION;
+
 > FLUSH PRIVILEGES;
+
 > EXIT;
 
