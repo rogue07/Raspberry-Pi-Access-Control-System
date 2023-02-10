@@ -9,6 +9,8 @@ The system uses GPIO 12 for relay control. The wiring diagram I went with is for
 https://learn.adafruit.com/adafruit-pn532-rfid-nfc/python-circuitpython
 
 
+All files are in the .zip file.
+
 
 1. Make sure the OS has a user named:
      accessc
