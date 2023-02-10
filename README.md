@@ -24,41 +24,24 @@ https://learn.adafruit.com/adafruit-pn532-rfid-nfc/python-circuitpython
 5. Let's install and create the database and table. From the command prompt run the following:
      $ sudo mysql_secure_installation
 
-Answer no:
+Answer yes to all:
+> Switch to unix_socket authentication [Y/n] y
+> Change the root password? [Y/n] y
+> Remove anonymous users? [Y/n] y
+> Disallow root login remotely? [Y/n] y
+> Remove test database and access to it? [Y/n] y
+> Reload privilege tables now? [Y/n] y
 
-Switch to unix_socket authentication [Y/n] n
-
-Change the root password? [Y/n] n
-
-Answer yes:
-
-Remove anonymous users? [Y/n] y
-
-Disallow root login remotely? [Y/n] y
-
-Remove test database and access to it? [Y/n] y
-
-Reload privilege tables now? [Y/n] y
-
-
-From the prompt run:
-
+From the command prompt run:
 $ sudo mysql -u root -p
 
 Run the following commands:
-
 > CREATE DATABASE codedb;
-
 > show databases;
-
 > USE codedb;
-
-> CREATE USER 'accessc'@'localhost' IDENTIFIED BY '?Ac0ntr0l.';
-
+> CREATE TABLE accessc(user_id INT AUTO_INCREMENT PRIMARY KEY, first VARCHAR(20) NOT NULL, last VARCHAR(20) NOT NULL, card VARCHAR(32) NOT NULL, creation VARCHAR(25) NOT NULL, access VARCHAR(25) NOT NULL);
+> CREATE USER 'accessc'@'localhost' IDENTIFIED BY 'PASSWORD';
 > GRANT ALL ON codedb.* To 'accessc'@'localhost' WITH GRANT OPTION;
+> FLUSH PRIVILEGES;
+> EXIT;
 
-> CREATE TABLE accessc(user_id INT AUTO_INCREMENT PRIMARY KEY, first VARCHAR(32) NOT NULL, last VARCHAR(32) NOT NULL, card VARCHAR(32) NOT NULL, creation DATE NOT NULL, access DATE NOT NULL);
-
-> DESC accessc;
-
-> exit;
