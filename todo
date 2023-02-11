@@ -1,1 +1,3 @@
-# encrypt password
+1. encrypt password
+2. create option in schedule for a temp or permanent schedule
+3. write script to clear out temp cron entries

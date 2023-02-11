@@ -1,4 +1,22 @@
-# Update apt-get
+#!/bin/bash
+
+# Check if the username exists
+if id "accessc" >/dev/null 2>&1; then
+	echo "Username accessc exists."
+	echo "Continuing installation."
+else
+	echo "Please create user 'accessc'."
+	exit 1
+fi
+
+
+if [ "$PWD" != "/home/accessc/Documents" ]; then
+	echo "Error: Working directory is not /home/accessc/Documents."
+	exit 1
+fi
+
+
+# Update and upgradet
 sudo apt-get update -y
 sudo apt-get upgrade -y
 
@@ -23,7 +41,6 @@ pip3 install adafruit-blinka
 
 clear
 
-#sudo echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="0424", ATTRS{idProduct}=="9514", GROUP="plugdev", MODE="0660"' | sudo tee /etc/udev/rules.d/42-pn532.rules
 sudo cp scanIn.service /etc/systemd/system/
 sudo systemctl start scanIn.service
 sudo systemctl enable scanIn.service
