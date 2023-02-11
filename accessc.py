@@ -80,7 +80,7 @@ def user_add():
         mydb = mysql.connector.connect(
         host="localhost",
         user="accessc",
-        password="PASSWORD",
+        password="?Ac0ntr0l.",
         database="codedb"
         )
 
@@ -123,7 +123,7 @@ def delete():
     mydb = mysql.connector.connect(
         host="localhost",
         user="accessc",
-        password="PASSWORD",
+        password="?Ac0ntr0l.",
         database="codedb"
         )
     mycursor = mydb.cursor()
