@@ -9,13 +9,13 @@ The system uses GPIO 12 for relay control. The wiring diagram I went with is for
 https://learn.adafruit.com/adafruit-pn532-rfid-nfc/python-circuitpython
 
 
-All files are in the .zip file.
+All files are in the documents.zip.
 
 
-1. Make sure the OS has a user named "accessc" and the files are put into the "Documents" folder.
+1. Make sure the OS has a user named "accessc" and files so it overrides the Documents folder.
 
 2. Unzip file:
-     $ unzip accessc.zip
+     $ unzip documents.zip
 
 3. Set a root password. From the command prompt run:
      $ sudo passwd root
