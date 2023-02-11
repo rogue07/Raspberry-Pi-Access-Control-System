@@ -12,7 +12,7 @@ https://learn.adafruit.com/adafruit-pn532-rfid-nfc/python-circuitpython
 All files are in the .zip file.
 
 
-1. Make sure the OS has a user named "accessc" and the files are pit into the "Documents" folder.
+1. Make sure the OS has a user named "accessc" and the files are put into the "Documents" folder.
 
 2. Unzip file:
      $ unzip accessc.zip
