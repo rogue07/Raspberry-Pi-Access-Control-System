@@ -9,27 +9,25 @@ The system uses GPIO 12 for relay control. The wiring diagram I went with is for
 https://learn.adafruit.com/adafruit-pn532-rfid-nfc/python-circuitpython
 
 
-All files are in the documents.zip.
+All files are in the accessc.zip.
 
 
 1. Make sure the OS has a user named "accessc" and unzip the files so it overrides the Documents folder.
 
-2. Unzip file:
-     $ unzip documents.zip
+2. Make sure in the accessc home directory:
+     $ cd
 
-3. Set a root password. From the command prompt run:
-     $ sudo passwd root
+3. Unzip file:
+     $ unzip accessc.zip
 
 4. From the command prompt in the Documents directory run the installer:
      $ ./installer.sh
 
-5. Let's install and create the database and table. From the command prompt run the following:
-     $ sudo mysql_secure_installation
 
-Answer yes to all:
+Answer as follows:
 > Switch to unix_socket authentication [Y/n] y
 
-> Change the root password? [Y/n] y
+> Change the root password? [Y/n] n
 
 > Remove anonymous users? [Y/n] y
 
@@ -39,8 +37,8 @@ Answer yes to all:
 
 > Reload privilege tables now? [Y/n] y
 
-From the command prompt run:
-$ sudo mysql -u root -p
+5. From the command prompt run:
+     $ sudo mysql -u root -p
 
 Run the following commands:
 > CREATE DATABASE codedb;
@@ -51,6 +49,7 @@ Run the following commands:
 
 > CREATE TABLE accessc(user_id INT AUTO_INCREMENT PRIMARY KEY, first VARCHAR(20) NOT NULL, last VARCHAR(20) NOT NULL, card VARCHAR(32) NOT NULL, creation VARCHAR(25) NOT NULL, access VARCHAR(25) NOT NULL);
 
+* Replace PASSWORD with a password of your choice.
 > CREATE USER 'accessc'@'localhost' IDENTIFIED BY 'PASSWORD';
 
 > GRANT ALL ON codedb.* To 'accessc'@'localhost' WITH GRANT OPTION;
