@@ -9,25 +9,28 @@ else
 	exit 1
 fi
 
-
+# Verify you're in the xorrect directory
 if [ "$PWD" != "/home/accessc/Documents" ]; then
 	echo "Error: Working directory is not /home/accessc/Documents."
 	exit 1
 fi
 
 
-# Update and upgradet
+# Update and upgrade
 sudo apt-get update -y
 sudo apt-get upgrade -y
 
+# Install these
 sudo apt-get install -y build-essential python-dev libusb-1.0-0-dev libudev-dev
 sudo apt-get install python3-pip -y
 sudo apt install mariadb-server -y
 
+# Installer for the rfid reader
 git clone https://github.com/adafruit/Adafruit_Python_PN532.git
 cd Adafruit_Python_PN532
 sudo python setup.py install
 
+# pip install
 pip3 install --upgrade setuptools
 pip3 install --upgrade adafruit-python-shell
 pip3 install schedule
@@ -41,6 +44,21 @@ pip3 install adafruit-blinka
 
 clear
 
-sudo cp scanIn.service /etc/systemd/system/
+# setup scanIn.service as a systemd process
+sudo cp ~/Documents/scanIn.service /etc/systemd/system
 sudo systemctl start scanIn.service
 sudo systemctl enable scanIn.service
+
+clear
+
+# Set root passwird
+echo "Enter root password:"
+sudo passwd root
+
+clear
+
+# Setup mariadb
+echo "mariadb secure installation:"
+sudo mysql_secure_installation
+
+echo "Install script is complete."
