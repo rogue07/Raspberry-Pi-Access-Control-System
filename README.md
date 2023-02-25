@@ -5,7 +5,7 @@ Using: 32 bit
 RFID Reader: Adafruit pn532
 
 
-The wiring diagram is the .jpg file.
+The wiring diagram is included, wiring_diagram.jpg
 
 
 The system uses GPIO 12 for relay control. The wiring diagram I went with is for SPI.
