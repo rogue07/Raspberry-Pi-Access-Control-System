@@ -28,11 +28,17 @@ All files are in the accessc.zip.
 
 It will update and upgrade the pi as well as install mariaDB, mysql-connector-python, adafruit tools and some other necessities. Lastly answer  the questions as follows:
 
+
 Switch to unix_socket authentication [Y/n] y
+
 Change the root password? [Y/n] y
+
 Remove anonymous users? [Y/n] y
+
 Disallow root login remotely? [Y/n] y
+
 Remove test database and access to it? [Y/n] y
+
 Reload privilege tables now? [Y/n] y
 
 
@@ -40,9 +46,9 @@ Reload privilege tables now? [Y/n] y
      $ python3 sqlSetup.py
 
 
-Lastly let's run setPasswd.sh to change the default password in the scripts to the one that was set in the last step.
+6. Lastly let's run setPasswd.sh to change the default password in the scripts to the one that was set in the last step.
      $ ./sqlPasswd.sh
 
 
-To start the program run:
+7. To start the program run:
      $ python3 accessc.py
