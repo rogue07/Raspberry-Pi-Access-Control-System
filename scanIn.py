@@ -34,7 +34,7 @@ pn532 = PN532_SPI(spi, cs_pin, debug=False)
 mydb = mysql.connector.connect(
     host="localhost",
     user="accessc",
-    password="?Ac0ntr0l.",
+    password="PASSWORD",
     database="codedb"
     )
 mycursor = mydb.cursor()
