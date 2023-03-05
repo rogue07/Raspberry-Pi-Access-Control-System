@@ -26,41 +26,23 @@ All files are in the accessc.zip.
 4. From the command prompt in the Documents directory run the installer:
      $ ./installer.sh
 
+It will update and upgrade the pi as well as install mariaDB, mysql-connector-python, adafruit tools and some other necessities. Lastly answer  the questions as follows:
 
-Answer as follows:
-> Switch to unix_socket authentication [Y/n] y
-
-> Change the root password? [Y/n] n
-
-> Remove anonymous users? [Y/n] y
-
-> Disallow root login remotely? [Y/n] y
-
-> Remove test database and access to it? [Y/n] y
-
-> Reload privilege tables now? [Y/n] y
-
-5. From the command prompt run:
-     $ sudo mysql -u root -p
-
-Run the following commands:
-> CREATE DATABASE codedb;
-
-> show databases;
-
-> USE codedb;
-
-> CREATE TABLE accessc(user_id INT AUTO_INCREMENT PRIMARY KEY, first VARCHAR(20) NOT NULL, last VARCHAR(20) NOT NULL, card VARCHAR(32) NOT NULL, creation VARCHAR(25) NOT NULL, access VARCHAR(25) NOT NULL);
-
-* Replace PASSWORD with a password of your choice.
-> CREATE USER 'accessc'@'localhost' IDENTIFIED BY 'PASSWORD';
-
-> GRANT ALL ON codedb.* To 'accessc'@'localhost' WITH GRANT OPTION;
-
-> FLUSH PRIVILEGES;
-
-> EXIT;
+Switch to unix_socket authentication [Y/n] y
+Change the root password? [Y/n] y
+Remove anonymous users? [Y/n] y
+Disallow root login remotely? [Y/n] y
+Remove test database and access to it? [Y/n] y
+Reload privilege tables now? [Y/n] y
 
 
-6. To run:
+5. Now that the installer has completed let's setup the MariaDB database and table by running the following:
+     $ python3 sqlSetup.py
+
+
+Lastly let's run setPasswd.sh to change the default password in the scripts to the one that was set in the last step.
+     $ ./sqlPasswd.sh
+
+
+To start the program run:
      $ python3 accessc.py
