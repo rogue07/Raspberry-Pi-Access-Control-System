@@ -28,6 +28,9 @@ All files are in the accessc.zip.
      
      $ unzip accessc.zip
 
+     $ cd Documents
+
+
 4. From the command prompt in the Documents directory run the installer:
      
      $ ./installer.sh
