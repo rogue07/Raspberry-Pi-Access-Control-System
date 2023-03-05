@@ -62,7 +62,7 @@ Reload privilege tables now? [Y/n] y
 
 6. Lastly let's run setPasswd.sh to change the default password in the scripts to the one that was set in the last step.
      
-     $ ./sqlPasswd.sh
+     $ ./setPasswd.sh
 
 
 7. To start the program run:
