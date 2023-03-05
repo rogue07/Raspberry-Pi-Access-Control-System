@@ -20,6 +20,8 @@ All files are in the accessc.zip.
 2. Make sure in the accessc home directory:
     
      $ cd
+     $ wget https://github.com/rogue07/Raspberry-Pi-Access-Control-System/raw/main/accessc.zip
+
 
 3. Unzip file:
      
