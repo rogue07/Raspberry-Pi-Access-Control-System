@@ -1,76 +1,67 @@
 # Raspberry-Pi-Access-Control-System
+
 Pi powered Access Control
-Built on: Raspbian GNU/Linux 11
-Using: 32 bit
-RFID Reader: Adafruit pn532
 
+* Built on: Raspbian GNU/Linux 11
+* Using: 32 bit
+* RFID Reader: Adafruit pn532
 
-The wiring diagram is included, wiring_diagram.jpg
+## Wiring Diagram
 
+![The wiring diagram](wiring_diagram.jpg "The wiring diagram")
 
-The system uses GPIO 12 for relay control. The wiring diagram I went with is for SPI.
-https://learn.adafruit.com/adafruit-pn532-rfid-nfc/python-circuitpython
+## Installation Instructions
 
+The system uses GPIO 12 for relay control. The wiring diagram I went with is for SPI based on the [recommendations from Adafruit](https://learn.adafruit.com/adafruit-pn532-rfid-nfc/python-circuitpython).
 
-All files are in the accessc.zip.
-
+All files are in the zip file, `accessc.zip`.
 
 1. Make sure the OS has a user named "accessc" and unzip the files so it overrides the Documents folder.
-
 2. Make sure in the accessc home directory:
-    
-     $ cd
 
-     $ wget https://github.com/rogue07/Raspberry-Pi-Access-Control-System/raw/main/accessc.zip
+     ```bash
+     cd
 
+     wget https://github.com/rogue07/Raspberry-Pi-Access-Control-System/raw/main/accessc.zip
+     ```
 
 3. Unzip file:
-     
-     $ unzip accessc.zip
 
-     $ cd Documents
+     ```bash
+     unzip accessc.zip
 
+     cd Documents
+     ```
 
 4. From the command prompt in the Documents directory run the installer:
-     
-     $ ./installer.sh
 
+     ```bash
+     ./installer.sh
+     ```
 
-It will update and upgrade the pi as well as install mariaDB, mysql-connector-python, adafruit tools and some other necessities. Lastly answer  the questions as follows:
+     It will update and upgrade the pi as well as install mariaDB, mysql-connector-python, adafruit tools and some other necessities. Lastly answer the questions as follows:
 
+     * Switch to unix_socket authentication [Y/n] y
+     * Change the root password? [Y/n] y
+     * Remove anonymous users? [Y/n] y
+     * Disallow root login remotely? [Y/n] y
+     * Remove test database and access to it? [Y/n] y
+     * Reload privilege tables now? [Y/n] y
 
-     Switch to unix_socket authentication [Y/n] y
+5. Now that the installer has completed, let's setup the MariaDB database and table by running the following. Take note of the password you are setting, you'll need this in the next step.
 
+     ```bash
+     python3 sqlSetup.py
+     ```
 
-     Change the root password? [Y/n] y
+6. Lastly let's run `setPasswd.sh` to change the default password in the scripts to the one that was set in the last step.
 
-
-     Remove anonymous users? [Y/n] y
-
-
-     Disallow root login remotely? [Y/n] y
-
-
-     Remove test database and access to it? [Y/n] y
-
-
-     Reload privilege tables now? [Y/n] y
-
-
-
-5. Now that the installer has completed let's setup the MariaDB database and table by running the following. Take note of the password you are setting, you'll need this in the next step.
-
-     $ python3 sqlSetup.py
-
-
-6. Lastly let's run setPasswd.sh to change the default password in the scripts to the one that was set in the last step.
-    
-     $ ./setPasswd.sh
-
+     ```bash
+     ./setPasswd.sh
+     ```
 
 7. To start the program run:
 
-     $ python3 accessc.py
-
-
-
+     ```bash
+     python3 accessc.py
+     ```
