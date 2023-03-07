@@ -48,7 +48,7 @@ All files are in the zip file, `accessc.zip`.
      * Remove test database and access to it? [Y/n] y
      * Reload privilege tables now? [Y/n] y
 
-5. Now that the installer has completed, let's setup the MariaDB database and table by running the following. Take note of the password you are setting, you'll need this in the next step.
+5. Now that the installer has completed, let's setup the MariaDB database and table by running the following. ***Take note of the passwords you are setting, you'll need this in the next step.***
 
      ```bash
      python3 sqlSetup.py
