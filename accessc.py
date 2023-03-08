@@ -91,24 +91,19 @@ def user_add():
         print(today)
 
         mycursor.execute(f'SELECT EXISTS(SELECT * FROM accessc WHERE card = "{newCard}") as OUTPUT')
-        myresult = mycursor.fetchone()
-        print(myresult)
-        print(bool(myresult))
-        x = bool(myresult)
-        if myresult == True:
-            print("Card has already been issues")
+        myresult = mycursor.fetchone()[0]
+        if myresult == 1:
+            # Card already exists, display error message
+            print("Card has already been issued")
             time.sleep(2)
             os.system("clear")
-            user_add()
+            return 
         else:
-            time.sleep(1)
-
-        try:
             sql = f'INSERT INTO accessc (first, last, card, creation, access) VALUES ("{fname}", "{lname}", "{newCard}", "{today}", "{today}")'
             mycursor.execute(sql)
-        except Exception as e:
-            print(e)
-            logging.info(f'{e}')
+#        except Exception as e:
+#            print(e)
+#            logging.info(f'{e}')
             time.sleep(3) 
             os.system('clear')
         mydb.commit()
@@ -116,7 +111,7 @@ def user_add():
         logging.info(f'{fname, lname} and card have been written to database.')
         os.system('clear')
         time.sleep(2)
-        break
+        return
     
 # delete user and card functiin
 def delete():
