@@ -10,6 +10,10 @@ Pi powered Access Control
 
 ![The wiring diagram](wiring_diagram.jpg "The wiring diagram")
 
+![The main menu](main_menu.jpg "The wiring diagram")
+
+
+
 ## Installation Instructions
 
 The system uses GPIO 12 for relay control. The wiring diagram I went with is for SPI based on the [recommendations from Adafruit](https://learn.adafruit.com/adafruit-pn532-rfid-nfc/python-circuitpython).
