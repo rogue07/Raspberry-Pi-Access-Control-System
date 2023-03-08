@@ -10,6 +10,8 @@ Pi powered Access Control
 
 ![The wiring diagram](wiring_diagram.jpg "The wiring diagram")
 
+## Main Menu
+
 ![The main menu](main_menu.jpg "The wiring diagram")
 
 
