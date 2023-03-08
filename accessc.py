@@ -42,6 +42,8 @@ def menu():
 
 # Add user and associate a card with them
 def user_add():
+    print("")
+    print("")
     fname = input('Enter First name: ').lower()
     if fname == '':    
         print("Name can not be blank")
@@ -101,16 +103,12 @@ def user_add():
         else:
             sql = f'INSERT INTO accessc (first, last, card, creation, access) VALUES ("{fname}", "{lname}", "{newCard}", "{today}", "{today}")'
             mycursor.execute(sql)
-#        except Exception as e:
-#            print(e)
-#            logging.info(f'{e}')
-            time.sleep(3) 
-            os.system('clear')
+            time.sleep(2) 
         mydb.commit()
         print(mycursor.rowcount, "record inserted.")
         logging.info(f'{fname, lname} and card have been written to database.')
-        os.system('clear')
         time.sleep(2)
+        os.system('clear')
         return
     
 # delete user and card functiin
@@ -202,37 +200,27 @@ def log():
 def emergency():
     menu = input("Lock/Unlock L/U > ").lower()
     print(menu)
-    time.sleep(5)
+    time.sleep(1)
     if menu == "l":
         print("Locking all locks.")
         os.system('python3 emergencylock.py')
-        time.sleep(2)
+        time.sleep(1)
         return
     elif menu == "u":
         print("Returning to normal operation")  
         os.system('python3 emergencyulock.py')
-        time.sleep(2)
+        time.sleep(1)
         return
 
+def clear_log():
+    output = run_command("clear_log.sh")
+    print(output)
 
-#def delete_old_logs():
-#    current_date = datetime.datetime.now()
-#    with open("accessc.log", "r") as f:
-#        lines = f.readlines()
-
-#    with open("accessc.log", "w") as f:
-#        for line in lines:
-#            line_date = datetime.datetime.strptime(line[:19], '%Y-%m-%d %H:%M:%S')
-#            if (current_date - line_date).days <= 7:
-#                f.write(line)
-
-# Main if elso loop for the menu
 while True:
     os.system('clear')
     menu()
     number = input(">  ")
     if number == "1":
-        time.sleep(2)
         os.system('clear')
         user_add()
         os.system('clear')
@@ -264,7 +252,7 @@ while True:
     elif number == "7":
         print("Exiting")
         os.system('clear')
-        delete_old_logs()
+        clear_log()
         quit()
     elif number == "_":
         print("Choose a correct number.")
