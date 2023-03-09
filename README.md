@@ -23,7 +23,7 @@ The system uses GPIO 12 for relay control. The wiring diagram I went with is for
 All files are in the zip file, `accessc.zip`.
 
 1. Make sure the OS has a user named "accessc" and unzip the files so it overrides the Documents folder.
-2. Make sure in the accessc home directory:
+2. Make sure you're in the accessc home directory:
 
      ```bash
      cd
