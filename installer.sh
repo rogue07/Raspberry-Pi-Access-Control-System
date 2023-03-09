@@ -42,4 +42,12 @@ sudo systemctl enable scanIn.service
 echo "mariadb secure installation:"
 sudo mysql_secure_installation
 
+
+# Set crontab entry for log cleanup
+#!/bin/bash
+
+# Use crontab to schedule the command to run every Friday at 11pm
+(crontab -l 2>/dev/null; echo "0 23 * * 5 /home/Documents/accessc/cleanupLog.sh") | crontab -
+
+
 echo "Install script is complete."
