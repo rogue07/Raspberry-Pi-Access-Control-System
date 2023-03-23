@@ -95,7 +95,6 @@ def user_add():
         mycursor.execute(f'SELECT EXISTS(SELECT * FROM accessc WHERE card = "{newCard}") as OUTPUT')
         myresult = mycursor.fetchone()[0]
         if myresult == 1:
-            # Card already exists, display error message
             print("Card has already been issued")
             time.sleep(2)
             os.system("clear")
@@ -212,9 +211,6 @@ def emergency():
         time.sleep(1)
         return
 
-def clear_log():
-    output = run_command("clear_log.sh")
-    print(output)
 
 while True:
     os.system('clear')
@@ -252,7 +248,6 @@ while True:
     elif number == "7":
         print("Exiting")
         os.system('clear')
-        clear_log()
         quit()
     elif number == "_":
         print("Choose a correct number.")
