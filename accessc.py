@@ -44,6 +44,15 @@ def menu():
 def user_add():
     print("")
     print("")
+
+    mydb = mysql.connector.connect(
+        host="localhost",
+        user="accessc",
+        password="abcd",
+        database="codedb"
+        )
+    mycursor = mydb.cursor()
+
     fname = input('Enter First name: ').lower()
     if fname == '':    
         print("Name can not be blank")
@@ -55,11 +64,24 @@ def user_add():
     if fname == '':    
         print("Name can not be blank")
         time.sleep(2)
-        return
     else:
         print(lname)
+        
+    mycursor.execute(f'SELECT * FROM accessc WHERE first="{fname}" AND last="{lname}"')
+    result = mycursor.fetchone()
+    print(result)
+    if not result:
+        print("User's name is unique")
+        logging.info(f'{fname, lname} was entered.')
+        time.sleep(1)
+    else:
+        print("User already exists!")
+        time.sleep(2)
+        os.system('clear')
+        user_add()
 
-    logging.info(f'{fname, lname} was entered.')
+
+
     spi = busio.SPI(board.SCK, board.MOSI, board.MISO)
     cs_pin = DigitalInOut(board.D5)
     pn532 = PN532_SPI(spi, cs_pin, debug=False)
@@ -82,7 +104,7 @@ def user_add():
         mydb = mysql.connector.connect(
         host="localhost",
         user="accessc",
-        password="PASSWORD",
+        password="abcd",
         database="codedb"
         )
 
@@ -115,7 +137,7 @@ def delete():
     mydb = mysql.connector.connect(
         host="localhost",
         user="accessc",
-        password="PASSWORD",
+        password="abcd",
         database="codedb"
         )
     mycursor = mydb.cursor()
