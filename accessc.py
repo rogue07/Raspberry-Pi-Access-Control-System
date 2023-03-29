@@ -48,7 +48,7 @@ def mariadb():
     mydb = mysql.connector.connect(
     host="localhost",
     user="accessc",
-    password="abcd",
+    password="PASSWORD",
     database="codedb"
     )
 #    mycursor = mydb.cursor()
@@ -138,7 +138,7 @@ def delete():
     mydb = mysql.connector.connect(
         host="localhost",
         user="accessc",
-        password="abcd",
+        password="PASSWORD",
         database="codedb"
         )
     mycursor = mydb.cursor()

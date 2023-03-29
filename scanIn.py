@@ -5,7 +5,7 @@
 # scanIn.py should be running as a systemd service
 
 
-import pdb
+#import pdb
 import os
 import mysql.connector
 import logging
@@ -36,7 +36,7 @@ def connectdb():
     mydb = mysql.connector.connect(
         host="localhost",
         user="accessc",
-        password="abcd",
+        password="PASSWORD",
         database="codedb"
         )
     mycursor = mydb.cursor()
