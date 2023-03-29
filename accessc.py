@@ -37,22 +37,31 @@ def menu():
     print("     4. Schedules")
     print("     5. View Live Log")
     print("     6. Emergency")
-    print("     7. Quit")
+    print("     7. View User Info")
+    print("     8. Quit")
+
+
+
+
+# loginto mariadb server
+def mariadb():
+    mydb = mysql.connector.connect(
+    host="localhost",
+    user="accessc",
+    password="abcd",
+    database="codedb"
+    )
+#    mycursor = mydb.cursor()
+    return mydb
 
 
 # Add user and associate a card with them
 def user_add():
     print("")
     print("")
-
-    mydb = mysql.connector.connect(
-        host="localhost",
-        user="accessc",
-        password="abcd",
-        database="codedb"
-        )
+    mydb = mariadb()
     mycursor = mydb.cursor()
-
+    
     fname = input('Enter First name: ').lower()
     if fname == '':    
         print("Name can not be blank")
@@ -63,7 +72,7 @@ def user_add():
     lname = input('Enter last name: ').lower()
     if fname == '':    
         print("Name can not be blank")
-        time.sleep(2)
+        time.sleep(1)
     else:
         print(lname)
         
@@ -80,8 +89,6 @@ def user_add():
         os.system('clear')
         user_add()
 
-
-
     spi = busio.SPI(board.SCK, board.MOSI, board.MISO)
     cs_pin = DigitalInOut(board.D5)
     pn532 = PN532_SPI(spi, cs_pin, debug=False)
@@ -90,7 +97,7 @@ def user_add():
     time.sleep(1)
 
     while True:
-        time.sleep(1)
+        time.sleep(1.2)
         uid = pn532.read_passive_target(timeout=0.5)
         if uid is None:
             continue
@@ -101,13 +108,7 @@ def user_add():
         now = datetime.now()
         today = now.strftime("%d/%m/%Y %H:%M")
 
-        mydb = mysql.connector.connect(
-        host="localhost",
-        user="accessc",
-        password="abcd",
-        database="codedb"
-        )
-
+        mydb = mariadb()    
         mycursor = mydb.cursor()
 
         print("Connected")
@@ -167,15 +168,7 @@ def delete():
 # Toggling relay to open and close the lock manually
 def lock():
     logging.info("Lock has been manually triggered.")
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(12, GPIO.OUT)
-    GPIO.output(12, GPIO.HIGH)
-    print("Lock is open")
-    time.sleep(5)
-    os.system("clear")
-    GPIO.output(12, GPIO.LOW)
-    print("Lock is closed")
-    time.sleep(3)
+    os.system('python3 unlock.py')
     return
 
 
@@ -234,44 +227,63 @@ def emergency():
         return
 
 
-while True:
+# view data in all tables
+def viewUsers():
+    mydb = mariadb()
+    mycursor = mydb.cursor()
+    mycursor.execute(f'SELECT * FROM accessc;')
     os.system('clear')
-    menu()
-    number = input(">  ")
-    if number == "1":
+    for table in mycursor:
+        print(table)
+    time.sleep(5)
+    return
+
+def main():
+    while True:
         os.system('clear')
-        user_add()
-        os.system('clear')
-    elif number == "2":
-        print("You choose to delete a user and card")
-        time.sleep(2)
-        os.system('clear')
-        delete()
-    elif number == "3":
-        print("Test lock")
-        time.sleep(2)
-        os.system('clear')
-        lock()
-    elif number == "4":
-        print("schedule")
-        time.sleep(2)
-        os.system('clear')
-        schedule()
-    elif number == "5":
-        print("View live log")
-        print("Ctl+c will exit live log")
-        time.sleep(4)
-        os.system('clear')
-        log()
-    elif number == "6":
-        print("Emergency")
-        os.system("clear")
-        emergency()
-    elif number == "7":
-        print("Exiting")
-        os.system('clear')
-        quit()
-    elif number == "_":
-        print("Choose a correct number.")
-        time.sleep(2)
-        os.system('clear')
+        menu()
+        number = input(">  ")
+        if number == "1":
+            os.system('clear')
+            user_add()
+            os.system('clear')
+        elif number == "2":
+            print("You choose to delete a user and card")
+            time.sleep(2)
+            os.system('clear')
+            delete()
+        elif number == "3":
+            print("Test lock")
+            time.sleep(2)
+            os.system('clear')
+            lock()
+        elif number == "4":
+            print("schedule")
+            time.sleep(2)
+            os.system('clear')
+            schedule()
+        elif number == "5":
+            print("View live log")
+            print("Ctl+c will exit live log")
+            time.sleep(4)
+            os.system('clear')
+            log()
+        elif number == "6":
+            print("Emergency")
+            os.system("clear")
+            emergency()
+        elif number == "7":
+            print("View Users Info")
+            os.system('clear')
+            viewUsers()
+        elif number == "8":
+            print("Exiting")
+            os.system('clear')
+            quit()
+        elif number == "_":
+            print("Choose a correct number.")
+            time.sleep(2)
+            os.system('clear')
+
+if __name__ == "__main__":
+    main()

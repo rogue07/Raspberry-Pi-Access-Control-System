@@ -5,6 +5,7 @@
 # scanIn.py should be running as a systemd service
 
 
+import pdb
 import os
 import mysql.connector
 import logging
@@ -31,21 +32,22 @@ cs_pin = DigitalInOut(board.D5)
 pn532 = PN532_SPI(spi, cs_pin, debug=False)
 
 # mariadb login
-mydb = mysql.connector.connect(
-    host="localhost",
-    user="accessc",
-    password="PASSWORD",
-    database="codedb"
-    )
-mycursor = mydb.cursor()
-
+def connectdb():
+    mydb = mysql.connector.connect(
+        host="localhost",
+        user="accessc",
+        password="abcd",
+        database="codedb"
+        )
+    mycursor = mydb.cursor()
+    return mycursor, mydb
 
 # main
 pn532.SAM_configuration()
 print("Waiting for NFC card...")
 
 while True:
-    time.sleep(1.5)
+    time.sleep(1.3)
     uid = pn532.read_passive_target(timeout=0.5)
     if uid is None:
         continue
@@ -53,7 +55,8 @@ while True:
     usercard = [hex(i) for i in uid]
    
     logging.info('Card was presented')
-
+    mycursor, mydb = connectdb()
+    
     mycursor.execute(f'SELECT * FROM accessc WHERE card = "{usercard}"')
     myresult = mycursor.fetchone()
     
@@ -69,10 +72,13 @@ while True:
         now = datetime.now()
         today = now.strftime("%d/%m/%Y %H:%M")        
         mycursor.execute(f'UPDATE accessc SET access = "{today}" WHERE CARD = "{usercard}"')
-
         mydb.commit()
         logging.info(f'{name} Access successful')
         import unlock.py
+        mycursor.close()
+        mydb.close()
     else:
         print("Failed access")
         logging.info('Failed access')
+        mycursor.close()
+        mydb.close()
