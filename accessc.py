@@ -29,6 +29,9 @@ logging.basicConfig(filename="accessc.log", format='%(asctime)s %(levelname)-8s 
 
 # Displayed menu
 def menu():
+    print("-------------------------------------------")
+    print("|     Rams Pi Access Control System       |")
+    print("-------------------------------------------")
     print("")
     print("     Choose an option: ")
     print("     1. Add User & Cards")
@@ -48,7 +51,7 @@ def mariadb():
     mydb = mysql.connector.connect(
     host="localhost",
     user="accessc",
-    password="PASSWORD",
+    password="abcd",
     database="codedb"
     )
 #    mycursor = mydb.cursor()
@@ -138,7 +141,7 @@ def delete():
     mydb = mysql.connector.connect(
         host="localhost",
         user="accessc",
-        password="PASSWORD",
+        password="abcd",
         database="codedb"
         )
     mycursor = mydb.cursor()
@@ -174,30 +177,74 @@ def lock():
 
 # Create a schedule using cron
 def schedule():
-    # whats the frequency kenneth
-    note = input("Note ex.unlock schedule> ")
-    utime = input("Unlock time ex.13:30> ")
-    ltime = input("Lock time ex.9:15> ")
+	action = input("Do you want to 'set' a schedule or 'edit' a schedule (set/edit): ").lower()
 
-    #take users time input and split it
-    htime,mtime = utime.split(':')
-    Htime,Mtime = ltime.split(':')
+	if action == 'set':
+	    name = input("Enter a name for your crontab entry: ")
+	
+	    hour = input("Enter the hour (1-12): ")
+	    try:
+	        hour = int(hour)
+	        if hour < 1 or hour > 12:
+	            raise ValueError
+	    except ValueError:
+	        print("Invalid hour. Please enter a number between 1 and 12.")
+	        exit(1)
+	
+	    minute = input("Enter the minute (0-59): ")
+	    try:
+	        minute = int(minute)
+	        if minute < 0 or minute > 59:
+	            raise ValueError
+	    except ValueError:
+	        print("Invalid minute. Please enter a number between 0 and 59.")
+	        exit(1)
+	
+	    am_pm = input("Enter 'AM' or 'PM': ").lower()
+	    if am_pm not in ('am', 'pm'):
+	        print("Invalid input for AM/PM. Please enter 'AM' or 'PM'.")
+	        exit(1)
+	
+	    if am_pm == 'pm':
+	        hour += 12
+	
+	    operation = input("Enter 'lock' or 'unlock': ")
+	    if operation not in ('lock', 'unlock'):
+	        print("Invalid input for operation. Please enter 'lock' or 'unlock'.")
+	        exit(1)
 
-    with CronTab(user='accessc') as cron:
-        # pulse to unlock
-        job = cron.new(command='python3 ~/Documents/pulseulock.py')
-        job.set_comment(note)
-        job.hour.on(htime)
-        job.minute.on(mtime)
-        # pulse to lock
-        job = cron.new(command='python3 ~/Documents/pulselock.py')
-        job.set_comment(note)
-        job.hour.on(Htime)
-        job.minute.on(Mtime)
-    cron.write()
-    print("Job has been scheduled")
-    logging.info(f'{utime, ltime} unlock/lock schedule set.')
-    time.sleep(3)
+	    cron = CronTab(user='accessc')
+
+	    if operation == 'lock':
+	        command = 'python3 ~/Documents/pulselock.py'
+	    else:
+	        command = 'python3 ~/Documents/pulseulock.py'
+
+	    job = cron.new(command=command)
+	
+	    job.setall(f'{minute} {hour} * * *')
+
+	    job.set_comment(name)
+	    job.enable()
+	    cron.write()
+	elif action == 'edit':
+	    try:
+	        subprocess.run(["crontab", "-e"], check=True)
+	    except subprocess.CalledProcessError as e:
+	        print(f"Error: {e}")
+	        exit(1)
+	else:
+	    print("Invalid action. Please enter 'set' or 'edit'.")
+	    exit(1)
+
+
+
+
+
+
+
+
+
 
 
 # Run the linux command tail on accessc.log

@@ -36,7 +36,7 @@ def connectdb():
     mydb = mysql.connector.connect(
         host="localhost",
         user="accessc",
-        password="PASSWORD",
+        password="abcd",
         database="codedb"
         )
     mycursor = mydb.cursor()
