@@ -2,7 +2,7 @@
 
 Pi powered Access Control
 
-* Tuilt on: Raspbian GNU/Linux 11 & 12
+* Tested on: Raspbian GNU/Linux 11 & 12
 * Using: 32 bit
 * RFID Reader: Adafruit pn532
 * Powered relay: Adafruit Power Relay FeatherWing
