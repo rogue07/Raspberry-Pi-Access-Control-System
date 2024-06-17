@@ -7,7 +7,7 @@ Pi powered Access Control
 * RFID Reader: Adafruit pn532
 * Powered relay: Adafruit Power Relay FeatherWing
 * Lock: ANSI Standard Heavy Duty Electric Door Strike Lock
-* Power Supply: F1TP DC 12V 2A Power Supply
+* Power Supply: DC 12V 2A Power Supply
 
 ## Wiring Diagram
 
