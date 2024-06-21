@@ -30,7 +30,7 @@ logging.basicConfig(filename="accessc.log", format='%(asctime)s %(levelname)-8s 
 # Displayed menu
 def menu():
     print("-------------------------------------------")
-    print("|     Rams Pi Access Control System       |")
+    print("|    Rogue07 Pi Access Control System      |")
     print("-------------------------------------------")
     print("")
     print("     Choose an option: ")
