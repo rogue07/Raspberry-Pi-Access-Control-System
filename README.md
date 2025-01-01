@@ -73,9 +73,9 @@ All files are in the zip file, `accessc.zip`.
 
      ```bash
      python3 accessc.py
-
-     or
-
-     Bring up a browser and navigate to:
-     http://localhost/menu.php
      ```
+
+or
+
+Bring up a browser and navigate to:
+     http://localhost/menu.php
