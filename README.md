@@ -15,7 +15,7 @@ Pi powered Access Control
 
 ## Main Menu
 
-![The main menu](main_menu.jpg "The wiring diagram")
+![The main menu](Screenshot_20250130_191515_Firefox.jpg "The wiring diagram")
 
 
 
